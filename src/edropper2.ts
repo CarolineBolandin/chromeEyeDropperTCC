@@ -65,7 +65,7 @@ var page = {
     // MESSAGING
     // ---------------------------------
     messageListener: function () {
-        // Listen for pickup activate
+        // Listen for pickup activate Dar uma conferida aqui
         console.log('dropper: page activated')
         console.log(`dropper: debug page at ${chrome.runtime.getURL('debug-tab.html')}`)
         chrome.runtime.onMessage.addListener(function (req, _sender, sendResponse) {
@@ -223,7 +223,7 @@ var page = {
 
         const color = page.pickColor(x, y)
         console.log(`dropper: move: ${x},${y}. Color: ${color.rgbhex}`)
-        console.log(`%c dropper: move: ${x},${y}. Color: ${"R: "+ color.r + " |G: " + color.g + " |B: " + color.b}`,'color: black; background-color: #00FFFF;')
+        console.log(`%c dropper: move: ${x},${y}. Color: ${"R: " + color.r + " |G: " + color.g + " |B: " + color.b}`, 'color: black; background-color: #00FFFF;')
         page.overlay.tooltip({
             screenWidth: page.screenWidth,
             screenHeight: page.screenHeight,

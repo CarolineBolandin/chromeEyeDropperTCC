@@ -9,23 +9,23 @@ interface BgSettings {
     enableColorTooltip: boolean
     enableRightClickDeactivate: boolean
     dropperCursor: string
-    plus: boolean
-    plus_type: string
+    //plus: boolean
+    // plus_type: string
 }
 
-interface HistoryColorItem {
-    h: string
-    n: string
-    s: number
-    t: number
-    f: number
-}
+//interface HistoryColorItem {
+//    h: string
+//    n: string
+//    s: number
+//    t: number
+//    f: number
+//}
 
-interface Palette {
-    name: string
-    created: number
-    colors: Array<string>
-}
+//interface Palette {
+//    name: string
+//    created: number
+//    colors: Array<string>
+//}
 
 // base bg object
 var bg = {
@@ -41,8 +41,8 @@ var bg = {
     history: {
         version: BG_VERSION,
         last_color: DEFAULT_COLOR,
-        current_palette: 'default',
-        palettes: [] as Array<Palette>,
+        //        current_palette: 'default',
+        //        palettes: [] as Array<Palette>,
     },
     defaultSettings: {
         autoClipboard: false,
@@ -51,16 +51,16 @@ var bg = {
         enableColorTooltip: true,
         enableRightClickDeactivate: true,
         dropperCursor: 'default',
-        plus: false,
-        plus_type: null,
+        //       plus: false,
+        //       plus_type: null,
     },
-    defaultPalette: 'default',
+    //   defaultPalette: 'default',
     settings: {} as BgSettings,
     edCb: null,
     color_sources: {
         1: 'Web Page',
         2: 'Color Picker',
-        3: 'Old History',
+        //        3: 'Old History',
     },
     // use selected tab
     // need to null all tab-specific variables
@@ -143,9 +143,9 @@ var bg = {
                     window.location.reload()
                     break
                 // Clear colors history
-                case 'clear-history':
-                    bg.clearHistory(sendResponse)
-                    break
+                //                case 'clear-history':
+                //                  bg.clearHistory(sendResponse)
+                //                 break
             }
         })
         // longer connections
@@ -178,14 +178,14 @@ var bg = {
          * When Eye Dropper is just installed, we want to display nice
          * page to user with some instructions
          */
-        chrome.runtime.onInstalled.addListener((object: chrome.runtime.InstalledDetails) => {
-            if (object.reason === 'install') {
-                chrome.tabs.create({
-                    url: 'https://eyedropper.org/installed',
-                    selected: true,
-                })
-            }
-        })
+        //       chrome.runtime.onInstalled.addListener((object: chrome.runtime.InstalledDetails) => {
+        //           if (object.reason === 'install') {
+        //               chrome.tabs.create({
+        //                   url: 'https://eyedropper.org/installed',
+        //                   selected: true,
+        //               })
+        //          }
+        //     })
     },
     setBadgeColor: function (color: string) {
         console.info('Setting badge color to ' + color)
@@ -216,20 +216,20 @@ var bg = {
         }
         console.groupEnd()
     },
-    saveToHistory: function (color: string, source = 1, url?: string) {
-        var palette = bg.getPalette()
-        if (
-            !palette.colors.find((x: HistoryColorItem) => {
-                return x.h == color
-            })
-        ) {
-            palette.colors.push(bg.historyColorItem(color, Date.now(), source, false, url))
-            console.info('Color ' + color + ' saved to palette ' + bg.getPaletteName())
-            bg.saveHistory()
-        } else {
-            console.info('Color ' + color + ' already in palette ' + bg.getPaletteName())
-        }
-    },
+    //saveToHistory: function (color: string, source = 1, url?: string) {
+    //    var palette = bg.getPalette()
+    //    if (
+    //       !palette.colors.find((x: HistoryColorItem) => {
+    //            return x.h == color
+    //        })
+    //    ) {
+    //        palette.colors.push(bg.historyColorItem(color, Date.now(), source, false, url))
+    //        console.info('Color ' + color + ' saved to palette ' + bg.getPaletteName())
+    //        bg.saveHistory()
+    //    } else {
+    //        console.info('Color ' + color + ' already in palette ' + bg.getPaletteName())
+    //    }
+    //   },
     // activate from content script
     activate2: function () {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs: Array<chrome.tabs.Tab>) => {
@@ -314,184 +314,184 @@ var bg = {
                 })
         })
     },
-    getPaletteName: function () {
-        return bg.getPalette().name
-    },
-    isPalette: function (name: string) {
-        return bg.history.palettes.find((x: Palette) => {
-            return x.name == name
-        })
-            ? true
-            : false
-    },
-    getPalette: function (name?: string) {
-        if (name === undefined) {
-            name =
-                bg.history.current_palette === undefined ||
-                !bg.isPalette(bg.history.current_palette)
-                    ? 'default'
-                    : bg.history.current_palette
-        }
-        return bg.history.palettes.find((x: Palette) => {
-            return x.name == name
-        })
-    },
-    changePalette: function (palette_name: string) {
-        if (bg.history.current_palette === palette_name) {
-            console.info('Not switching, already on palette ' + palette_name)
-        } else if (bg.isPalette(palette_name)) {
-            bg.history.current_palette = palette_name
-            console.info('Switched current palette to ' + palette_name)
-            bg.saveHistory()
-        } else {
-            console.error('Cannot switch to palette ' + palette_name + '. Palette not found.')
-        }
-    },
-    getPaletteNames: function () {
-        return bg.history.palettes.map((x: Palette) => {
-            return x.name
-        })
-    },
-    uniquePaletteName: function (name: string) {
-        // default name is palette if we receive empty or undefined name
-        if (name === undefined || !name || name.length < 1) {
-            console.info('uniquePaletteName: ' + name + " empty, trying 'palette'")
-            return bg.uniquePaletteName('palette')
-            // if there is already palette with same name
-        } else if (
-            bg.getPaletteNames().find((x: string) => {
-                return x == name
-            })
-        ) {
-            var matches = name.match(/^(.*[^\d]+)(\d+)?$/)
-            // doesn't end with number, we will add 1
-            if (matches[2] === undefined) {
-                console.info('uniquePaletteName: ' + name + " occupied, trying '" + name + "1'")
-                return bg.uniquePaletteName(name + '1')
-                // ends with number
-            } else {
-                var new_name = '' + matches[1] + (parseInt(matches[2]) + 1)
-                console.info('uniquePaletteName: ' + name + " occupied, trying '" + new_name + "'")
-                return bg.uniquePaletteName(new_name)
-            }
-        } else {
-            console.info('uniquePaletteName: ' + name + " is free'")
-            return name
-        }
-    },
-    createPalette: function (name: string) {
-        var palette_name = bg.uniquePaletteName(name)
-        console.info('Creating new palette ' + name + '. Unique name: ' + palette_name)
-        bg.history.palettes.push({
-            name: palette_name,
-            created: Date.now(),
-            colors: [],
-        })
-        bg.saveHistory()
-        return bg.getPalette(palette_name)
-    },
-    destroyPalette: function (name: string) {
-        if (!bg.isPalette(name)) {
-            return
-        }
-        if (name === 'default') {
-            console.info("Can't destroy default palette. Clearing only.")
-            bg.getPalette(name).colors = []
-        } else {
-            console.info('Destroying palette ' + name)
-            var destroying_current = name === bg.getPalette().name
-            bg.history.palettes = bg.history.palettes.filter((obj: Palette) => {
-                return obj.name !== name
-            })
-            // if we are destroying current palette, switch to default one
-            if (destroying_current) {
-                bg.changePalette('default')
-            }
-        }
-        bg.saveHistory(false)
-        chrome.storage.sync.remove('palette.' + name)
-    },
-    clearHistory: function (sendResponse: ({ state: string }) => void) {
-        var palette = bg.getPalette()
-        console.info('Clearing history for palette ' + palette.name)
-        palette.colors = []
-        bg.saveHistory()
-        if (sendResponse != undefined) {
-            sendResponse({
-                state: 'OK',
-            })
-        }
-    },
+    //    getPaletteName: function () {
+    //        return bg.getPalette().name
+    //    },
+    //    isPalette: function (name: string) {
+    //        return bg.history.palettes.find((x: Palette) => {
+    //            return x.name == name
+    //        })
+    //            ? true
+    //            : false
+    //    },
+    //    getPalette: function (name?: string) {
+    //        if (name === undefined) {
+    //            name =
+    //                bg.history.current_palette === undefined ||
+    //                    !bg.isPalette(bg.history.current_palette)
+    //                    ? 'default'
+    //                    : bg.history.current_palette
+    //        }
+    //        return bg.history.palettes.find((x: Palette) => {
+    //            return x.name == name
+    //        })
+    //    },
+    //    changePalette: function (palette_name: string) {
+    //        if (bg.history.current_palette === palette_name) {
+    //            console.info('Not switching, already on palette ' + palette_name)
+    //        } else if (bg.isPalette(palette_name)) {
+    //            bg.history.current_palette = palette_name
+    //            console.info('Switched current palette to ' + palette_name)
+    //            bg.saveHistory()
+    //        } else {
+    //            console.error('Cannot switch to palette ' + palette_name + '. Palette not found.')
+    //        }
+    //    },
+    //   getPaletteNames: function () {
+    //       return bg.history.palettes.map((x: Palette) => {
+    //           return x.name
+    //       })
+    //  },
+    //    uniquePaletteName: function (name: string) {
+    // default name is palette if we receive empty or undefined name
+    //        if (name === undefined || !name || name.length < 1) {
+    //            console.info('uniquePaletteName: ' + name + " empty, trying 'palette'")
+    //            return bg.uniquePaletteName('palette')
+    //            // if there is already palette with same name
+    //        } else if (
+    //            bg.getPaletteNames().find((x: string) => {
+    //                return x == name
+    //            })
+    //        ) {
+    //            var matches = name.match(/^(.*[^\d]+)(\d+)?$/)
+    //            // doesn't end with number, we will add 1
+    //            if (matches[2] === undefined) {
+    //                console.info('uniquePaletteName: ' + name + " occupied, trying '" + name + "1'")
+    //                return bg.uniquePaletteName(name + '1')
+    //                // ends with number
+    //            } else {
+    //                var new_name = '' + matches[1] + (parseInt(matches[2]) + 1)
+    //                console.info('uniquePaletteName: ' + name + " occupied, trying '" + new_name + "'")
+    //                return bg.uniquePaletteName(new_name)
+    //            }
+    //        } else {
+    //            console.info('uniquePaletteName: ' + name + " is free'")
+    //            return name
+    //        }
+    //    },
+    //    createPalette: function (name: string) {
+    //        var palette_name = bg.uniquePaletteName(name)
+    //        console.info('Creating new palette ' + name + '. Unique name: ' + palette_name)
+    //        bg.history.palettes.push({
+    //            name: palette_name,
+    //            created: Date.now(),
+    //            colors: [],
+    //        })
+    //        bg.saveHistory()
+    //        return bg.getPalette(palette_name)
+    //    },
+    //   destroyPalette: function (name: string) {
+    //        if (!bg.isPalette(name)) {
+    //            return
+    //        }
+    //        if (name === 'default') {
+    //            console.info("Can't destroy default palette. Clearing only.")
+    //            bg.getPalette(name).colors = []
+    //        } else {
+    //            console.info('Destroying palette ' + name)
+    //            var destroying_current = name === bg.getPalette().name
+    //            bg.history.palettes = bg.history.palettes.filter((obj: Palette) => {
+    //               return obj.name !== name
+    //            })
+    // if we are destroying current palette, switch to default one
+    //            if (destroying_current) {
+    //                bg.changePalette('default')
+    //            }
+    //        }
+    //        bg.saveHistory(false)
+    //        chrome.storage.sync.remove('palette.' + name)
+    //    },
+    //    clearHistory: function (sendResponse: ({ state: string }) => void) {
+    //        var palette = bg.getPalette()
+    //       console.info('Clearing history for palette ' + palette.name)
+    //        palette.colors = []
+    //        bg.saveHistory()
+    //        if (sendResponse != undefined) {
+    //            sendResponse({
+    //                state: 'OK',
+    //            })
+    //        }
+    //    },
     /**
      * Load history from storage on extension start
      */
-    loadHistory: function () {
-        console.info('Loading history from storage')
-        chrome.storage.sync.get((items) => {
-            if (items.history) {
-                bg.history.current_palette = items.history.cp
-                bg.history.last_color = items.history.lc
-                console.info('History info loaded. Loading palettes.')
-                console.info('Default palette before loading: ' + bg.defaultPalette)
-                var count_default_1 = 0
-                var count_converted_1 = 0
-                Object.keys(items).forEach((key, _index) => {
-                    var matches = key.match(/^palette\.(.*)$/)
-                    if (matches) {
-                        var palette = items[key]
-                        bg.history.palettes.push({
-                            name: matches[1],
-                            colors: palette.c,
-                            created: palette.t,
-                        })
-                        if (matches[1] === 'default') {
-                            count_default_1 = palette.c.length
-                        }
-                        if (matches[1] === 'converted') {
-                            count_converted_1 = palette.c.length
-                        }
-                    }
-                })
-                if (count_default_1 === 0 && count_converted_1 > 0) {
-                    bg.defaultPalette = 'converted'
-                    console.info('Default palette after loading: ' + bg.defaultPalette)
-                }
-                if (items.history.v < bg.history.version) {
-                    bg.checkHistoryUpgrades(items.history.v)
-                }
-            } else {
-                console.log('No history in storage')
-                bg.createPalette('default')
-            }
-            // in any case we will try to convert local history
-            bg.tryConvertOldHistory()
-        })
-    },
+    //   loadHistory: function () {
+    //       console.info('Loading history from storage')
+    //       chrome.storage.sync.get((items) => {
+    //           if (items.history) {
+    //               bg.history.current_palette = items.history.cp
+    //               bg.history.last_color = items.history.lc
+    //               console.info('History info loaded. Loading palettes.')
+    //              console.info('Default palette before loading: ' + bg.defaultPalette)
+    //              var count_default_1 = 0
+    //             var count_converted_1 = 0
+    //            Object.keys(items).forEach((key, _index) => {
+    //                var matches = key.match(/^palette\.(.*)$/)
+    //               if (matches) {
+    //                   var palette = items[key]
+    //                       bg.history.palettes.push({
+    //                           name: matches[1],
+    //                           colors: palette.c,
+    //                           created: palette.t,
+    //                       })
+    //                 if (matches[1] === 'default') {
+    //                   count_default_1 = palette.c.length
+    //              }
+    //              if (matches[1] === 'converted') {
+    //                  count_converted_1 = palette.c.length
+    //              }
+    //          }
+    //      })
+    //      if (count_default_1 === 0 && count_converted_1 > 0) {
+    //          bg.defaultPalette = 'converted'
+    //          console.info('Default palette after loading: ' + bg.defaultPalette)
+    //      }
+    //      if (items.history.v < bg.history.version) {
+    //         bg.checkHistoryUpgrades(items.history.v)
+    //     }
+    //  } else {
+    //     console.log('No history in storage')
+    //    bg.createPalette('default')
+    //  }
+    // in any case we will try to convert local history
+    //   bg.tryConvertOldHistory()
+    //  })
+    //  },
     /**
      * Check if there are needed upgrades to history and exec if needed
      **/
-    checkHistoryUpgrades: function (version: number) {
-        // Wrong timestamp saved before version 14
-        //
-        // There was error in bg versions before 14 that caused saving
-        // history color timestamp as link tu datenow function instead of
-        // current date in some cases.
-        //
-        // We will check for such times and set them to start of epoch
-        if (version < 14) {
-            console.log('History version is pre 14: Fixing color times')
-            for (var _i = 0, _a = bg.history.palettes; _i < _a.length; _i++) {
-                var palette = _a[_i]
-                for (var _b = 0, _c = palette.colors; _b < _c.length; _b++) {
-                    var color = _c[_b]
-                    if (typeof color.t !== 'number') {
-                        color.t = 0
-                    }
-                }
-            }
-            bg.saveHistory()
-        }
-    },
+    //   checkHistoryUpgrades: function (version: number) {
+    // Wrong timestamp saved before version 14
+    //
+    // There was error in bg versions before 14 that caused saving
+    // history color timestamp as link tu datenow function instead of
+    // current date in some cases.
+    //
+    // We will check for such times and set them to start of epoch
+    //        if (version < 14) {
+    //            console.log('History version is pre 14: Fixing color times')
+    //            for (var _i = 0, _a = bg.history.palettes; _i < _a.length; _i++) {
+    //                var palette = _a[_i]
+    //                for (var _b = 0, _c = palette.colors; _b < _c.length; _b++) {
+    //                    var color = _c[_b]
+    //                    if (typeof color.t !== 'number') {
+    //                        color.t = 0
+    //                    }
+    //                }
+    //            }
+    //            bg.saveHistory()
+    //        }
+    //    },
     /**
      * Load settings from storage on extension start
      */
@@ -523,57 +523,57 @@ var bg = {
      * t = timestamp when taken
      * f = favorite
      */
-    historyColorItem: function (
-        color: string,
-        timestamp = Date.now(),
-        source = 1,
-        favorite = false,
-        _url?: string,
-    ) {
-        return {
-            h: color,
-            n: '',
-            s: source,
-            t: timestamp,
-            f: favorite ? 1 : 0,
-        }
-    },
+    //    historyColorItem: function (
+    //        color: string,
+    //        timestamp = Date.now(),
+    //        source = 1,
+    //        favorite = false,
+    //        _url?: string,
+    //    ) {
+    //        return {
+    //            h: color,
+    //            n: '',
+    //            s: source,
+    //            t: timestamp,
+    //            f: favorite ? 1 : 0,
+    //        }
+    //    },
     /**
      * Convert pre 0.4 Eye Dropper local history to synced storage
      *
      * Backup of old history is stored in local storage in _history_backup
      * in case something goes south.
      */
-    tryConvertOldHistory: function () {
-        if (window.localStorage.history) {
-            var oldHistory = JSON.parse(window.localStorage.history)
-            var converted_palette = bg.createPalette('converted')
-            console.warn(converted_palette)
-            // add every color from old history to new schema with current timestamp
-            var timestamp = Date.now()
-            for (var key in oldHistory) {
-                var color = oldHistory[key]
-                // in versions before 0.3.0 colors were stored without # in front
-                if (color[0] != '#') {
-                    color = '#' + color
-                }
-                // push color to our converted palette
-                converted_palette.colors.push(bg.historyColorItem(color, timestamp, 3))
-                // set this color as last
-                bg.history.last_color = color
-            }
-            // make backup of old history
-            window.localStorage._history_backup = window.localStorage.history
-            // remove old history from local storage
-            window.localStorage.removeItem('history')
-            // sync history
-            bg.saveHistory()
-            // change to converted history if current palette is empty
-            if (bg.getPalette().colors.length < 1) {
-                bg.changePalette(converted_palette.name)
-            }
-        }
-    },
+    //    tryConvertOldHistory: function () {
+    //        if (window.localStorage.history) {
+    //            var oldHistory = JSON.parse(window.localStorage.history)
+    //            var converted_palette = bg.createPalette('converted')
+    //            console.warn(converted_palette)
+    // add every color from old history to new schema with current timestamp
+    //            var timestamp = Date.now()
+    //            for (var key in oldHistory) {
+    //                var color = oldHistory[key]
+    // in versions before 0.3.0 colors were stored without # in front
+    //                if (color[0] != '#') {
+    //                    color = '#' + color
+    //                }
+    // push color to our converted palette
+    //                converted_palette.colors.push(bg.historyColorItem(color, timestamp, 3))
+    // set this color as last
+    //                bg.history.last_color = color
+    //            }
+    // make backup of old history
+    //            window.localStorage._history_backup = window.localStorage.history
+    // remove old history from local storage
+    //            window.localStorage.removeItem('history')
+    // sync history
+    //            bg.saveHistory()
+    // change to converted history if current palette is empty
+    //            if (bg.getPalette().colors.length < 1) {
+    //                bg.changePalette(converted_palette.name)
+    //           }
+    //        }
+    //    },
     /**
      * Convert pre 0.4 Eye Dropper local settings to synced storage
      *
@@ -691,4 +691,4 @@ var bg = {
 document.addEventListener('DOMContentLoaded', function () {
     bg.init()
 })
-;(<any>window).bg = bg
+    ; (<any>window).bg = bg
