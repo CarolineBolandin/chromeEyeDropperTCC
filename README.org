@@ -1,13 +1,10 @@
-#+TITLE: Eye Dropper browser extension
+#+TITLE: ColorCode - ColorAdd, browser extension.
 
-*Eye Dropper* is web browser extension which helps you pick and manage palettes
-of colors from web pages or color picker. It currently works in Chromium and
+*ColorCode - ColorAdd* is an extension built on code from the Eye Dropper project, which is a web browser extension that helps you recognize and learn symbols
+of web page colors using the ColorAdd symbols. Currently works on Chromium and
 Google Chrome™.
 
-You can find more info, help and FAQ at [[https://eyedropper.org][homepage]].
-
-* Bugs and ideas
-You can report bugs and ideas at [[https://github.com/kepi/chromeEyeDropper/issues][project's issues tracker]].
+*I'm just using this code for my final project, be aware of the license and all rights to use:
 
 * License
-This extension is released under [[http://github.com/kepi/chromeEyeDropper/blob/master/LICENSE][MIT License]].
+The Eye Dropper extension is released under [[http://github.com/kepi/chromeEyeDropper/blob/master/LICENSE][MIT License]].*
