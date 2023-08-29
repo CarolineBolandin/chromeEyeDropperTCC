@@ -166,8 +166,6 @@ class ToolTip extends Tool {
 
         let fromTop = args.y - yOffset > args.screenHeight / 2 ? -15 : 20
         let fromLeft = args.x - xOffset < args.screenWidth / 2 ? 15 : -30
-
-        //  this.el.style.backgroundColor = `#${args.color.rgbhex}`
         this.el.style.borderColor = `#${args.color.opposite}`
         this.el.style.top = `${args.y + fromTop}px`
         this.el.style.left = `${args.x + fromLeft}px`
@@ -236,12 +234,13 @@ class ToolBox extends Tool {
 
     hookColor(args: { color: any; x: number; y: number; top: number; left: number }) {
         super.hookColor(args)
+        const perto = findcolor(args.color)
 
         let debug_info = DEV_MODE
-            ? `<div style="font-size: 0.8em">coord: ${args.x},${args.y}</div>`
+            ? `<div style="font-size: 0.8em">${args.x},${args.y}</div>`
             : ''
-
-        this.elText.innerHTML = `#${this.color.rgbhex}<br/>rgb(${this.color.r},${this.color.g},${this.color.b})${debug_info}`
+        //aqui
+        this.elText.innerHTML = `<p style="text-transform: uppercase">${perto.cor}</p><br/>rgb(${this.color.r},${this.color.g},${this.color.b})${debug_info}`
         this.elColor.style.backgroundColor = `#${this.color.rgbhex}`
     }
 }

@@ -1,14 +1,20 @@
 const cores = [
    //primárias
    { cor: 'azul', r: 0, g: 0, b: 255 },
+   { cor: 'azul', r: 4, g: 79, b: 139 }, //acrescimo
    { cor: 'vermelho', r: 255, g: 0, b: 0 },
+   { cor: 'vermelho', r: 188, g: 74, b: 22 }, //acrescimo
    { cor: 'verde', r: 0, g: 255, b: 0 },
+   { cor: 'verde', r: 0, g: 152, b: 130 }, //acrescimo
    //cores secundárias
    { cor: 'amarelo', r: 255, g: 255, b: 0 },
+   { cor: 'amarelo', r: 249, g: 220, b: 0 }, //acrescimo
    { cor: 'roxo', r: 128, g: 0, b: 128 },
    { cor: 'marrom', r: 165, g: 42, b: 42 },
+   { cor: 'marrom', r: 181, g: 115, b: 23 }, //acrescimo
    { cor: 'marrom', r: 128, g: 0, b: 0 }, //acrescimo
    { cor: 'laranja', r: 255, g: 165, b: 0 },
+   { cor: 'laranja', r: 233, g: 84, b: 13 }, //acrescimo
    //Cores Claras
    { cor: 'azulClaro', r: 173, g: 216, b: 230 },
    { cor: 'verdeClaro', r: 144, g: 238, b: 144 },
@@ -31,8 +37,6 @@ const cores = [
    { cor: 'cinzaEscuro', r: 169, g: 169, b: 169 },
    { cor: 'branco', r: 255, g: 255, b: 255 },
    { cor: 'preto', r: 0, g: 0, b: 0 }
-
-   //cores adicionais
 
 ];
 

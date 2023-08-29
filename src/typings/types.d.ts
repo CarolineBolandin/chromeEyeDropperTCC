@@ -5,4 +5,5 @@ declare interface Color {
     alpha: number
     rgbhex?: string
     opposite?: string
+    NomeCor?: string
 }

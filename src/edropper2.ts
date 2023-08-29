@@ -2,7 +2,6 @@ import shortcut from './vendor/shortcut'
 import scrollStop from './vendor/scrollStop'
 import Overlay from './overlay'
 import Rect from './rect'
-import { copyToClipboard } from './clipboard'
 
 var EDROPPER_VERSION = 13
 var CANVAS_MAX_SIZE = 32767 - 20
@@ -22,8 +21,6 @@ var page = {
         enableColorToolbox: true,
         enableColorTooltip: true,
         enableRightClickDeactivate: true,
-        autoClipboard: false,
-        autoClipboardNoGrid: false,
     },
 
     canvas: null,
@@ -160,15 +157,6 @@ var page = {
         const color = page.pickColor(x, y)
         console.log(`dropper: click: ${x},${y}. Color: ${color.rgbhex}`)
 
-        if (page.options.autoClipboard) {
-            const prefix = page.options.autoClipboardNoGrid ? '' : '#'
-            copyToClipboard(`${prefix}${color.rgbhex}`)
-        }
-
-        page.sendMessage({
-            type: 'set-color',
-            color,
-        })
     },
     onScrollStop: function () {
         if (!page.dropperActivated) return
