@@ -1,7 +1,7 @@
 {
-  "name": "eye-dropper",
+  "name": "ColorCode - ColorAdd",
   "version": "0.5.13",
-  "description": "Eye Dropper for Google Chrome™",
+  "description": "ColorAdd Google Chrome™",
   "main": "index.js",
   "scripts": {
     "watch": "rimraf dist && webpack --config webpack/webpack.dev.js --watch",
@@ -13,12 +13,6 @@
     "test": "jest",
     "deploy:prod": "yarn run clean && yarn run test && yarn run build:prod && yarn run zip:prod",
     "deploy:dev": "yarn run clean && yarn run test && yarn run build:dev && yarn run zip:dev"
-  },
-  "author": "Ondra Kudlík (Kepi)",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/kepi/chromeEyeDropper.git"
   },
   "devDependencies": {
     "@types/chrome": "0.0.188",

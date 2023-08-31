@@ -1,16 +1,10 @@
 import { EdColor } from './ed-color'
 import { mscConfirm, mscPrompt } from 'medium-style-confirm'
 import ColorPicker from 'simple-color-picker'
-//import { copyToClipboard } from './clipboard'
 
 const NEED_BG_VERSION = 18 // minimum version of bg script we need
 
 let bgPage = null
-
-//     section elements
-let sec_color_boxes = null
-let sec_color_history = null
-let sec_content = null
 
 //     cpicker elements
 let cpicker: ColorPicker | null = null
@@ -48,9 +42,6 @@ function init() {
 
     console.groupEnd()
 
-    sec_content = document.getElementById('content')
-    sec_color_boxes = document.getElementById('color-boxes')
-    sec_color_history = document.getElementById('color-history')
 }
 /**
  * Init links on tabs
@@ -203,16 +194,6 @@ function initPickButton(tab: chrome.tabs.Tab) {
  *
  */
 function switchTab(tabId: string) {
-    // on button-about hide history and color boxes
-    if (tabId === 'button-about') {
-        sec_color_boxes.style.display = 'none'
-        sec_color_history.style.display = 'none'
-
-        // display them on others
-    } else {
-        sec_color_boxes.style.display = 'block'
-        sec_color_history.style.display = 'block'
-    }
 
     // color picker tab
     if (cpicker) {
@@ -244,7 +225,6 @@ function switchTab(tabId: string) {
 
             request.onload = () => {
                 if (request.status >= 200 && request.status < 400) {
-                    sec_content.insertAdjacentHTML('afterend', request.responseText)
 
                     initExternalLinks()
                     if (tabId === 'tab-cp') {
@@ -263,28 +243,6 @@ function switchTab(tabId: string) {
             }
         }
         console.groupEnd()
-    }
-
-    function colorBox(type: "new" | "current", color_hex: string) {
-        //    if (boxes[type]) {
-        const color = new EdColor(color_hex)
-
-        let formats = [
-            color.toHexString(),
-            color.toHex3String(),
-            color.toName(),
-            color.toHslString(),
-            color.toRgbString(),
-        ]
-
-        let html = ''
-        for (let value of formats) {
-            if (value) {
-                html += `<span class="mr1 bg-white br1 ph1 mb1 dib"><code>${value}</code></span>`
-            } else {
-                html += `<span class="mr1 br1 ph1 mb1 dib" style="min-width: 3em;">&nbsp;</span>`
-            }
-        }
     }
 }
 

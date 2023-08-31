@@ -133,7 +133,6 @@ var bg = {
                     case 'set-color':
                         console.log(sender.sender)
                         console.log(req.color)
-                        bg.setColor('#' + req.color.rgbhex, true, 1, sender.sender.url)
                         break
                 }
             })
@@ -154,19 +153,6 @@ var bg = {
                 255,
             ],
         })
-    },
-    // method for setting color. It set bg color, update badge and save to history if possible
-    // source - see historyColorItem for description
-    setColor: function (color: string, history = true, source = 1, url?: string) {
-        console.group('setColor')
-        console.info('Received color ' + color + ', history: ' + history)
-        if (!color || !color.match(/^#[0-9a-f]{6}$/)) {
-            console.error('error receiving collor from dropper')
-            console.groupEnd()
-            return
-        } // we are storing color with first # character
-        bg.setBadgeColor(color)
-        console.groupEnd()
     },
     activate2: function () {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs: Array<chrome.tabs.Tab>) => {
@@ -221,7 +207,7 @@ var bg = {
         }
     },
     createDebugTab: function () {
-        // DEBUG
+        // DEBUG PAGE
         if (bg.debugTab != 0) {
             chrome.tabs.sendMessage(bg.debugTab, {
                 type: 'update',
@@ -319,29 +305,6 @@ var bg = {
                 console.info('Settings synced to storage')
             },
         )
-    },
-    unlockPlus: function (type: string) {
-        bg.settings.plus = true
-        bg.settings.plus_type = type
-        bg.saveSettings()
-    },
-    lockPlus: function () {
-        bg.settings.plus = false
-        bg.settings.plus_type = null
-        bg.saveSettings()
-    },
-    plus: function () {
-        return bg.settings.plus ? bg.settings.plus_type : false
-    },
-    plusColor: function (color = bg.settings.plus_type) {
-        switch (color) {
-            case 'free':
-                return 'gray'
-            case 'alpha':
-                return 'silver'
-            default:
-                return color
-        }
     },
     init: function () {
         console.group('init')
