@@ -1,10 +1,9 @@
 {
-    "name": "Eye Dropper",
+    "name": "ColorCode - ColorAdd",
     "version": "@version",
     "version_name": "@versionname",
     "manifest_version": 2,
-    "description": "Eye Dropper is open source extension which allows you to pick colors from web pages, color picker and your personal color history.",
-    "homepage_url": "https://eyedropper.org",
+    "description": "",
 
     "minimum_chrome_version": "49",
 
@@ -12,8 +11,7 @@
         "page": "background.html",
         "persistent": true
     },
-    "options_page": "options.html",
-
+   
     "icons": {
         "48": "img/icon_48.png",
         "128": "img/icon_128.png"
