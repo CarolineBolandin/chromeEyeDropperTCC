@@ -1,6 +1,6 @@
 # ColorCode - ColorAdd (browser extension) 
 
-ColorCode - ColorAdd* is an extension built on code from the Eye Dropper project, which is a web browser extension that helps you recognize and learn symbols
+ColorCode - ColorAdd is an extension built on code from the Eye Dropper project, which is a web browser extension that helps you recognize and learn symbols
 of web page colors using the ColorAdd symbols. Currently works on Chromium and Google Chrome.
 
 ## Licenses 
