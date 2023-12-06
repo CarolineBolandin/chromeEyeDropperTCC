@@ -14,7 +14,7 @@ ColorAdd, the use is made possible through a pro bono license. (Schools and univ
     [🔗 Chrome Eye Dropper](http://github.com/kepi/chromeEyeDropper) - 🚀 Eye Dropper is web browser extension which helps you pick and manage palettes of colors from web pages or color picker. It currently works in Chromium and Google Chrome™.
 
 ## 📋 Steps to compile the yarn project 
-'''
+''
 1) install nodejs (comes with npm)
 2) install yarn with the command "npm install -g yarn"
 3) clone the project
