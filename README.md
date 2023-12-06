@@ -7,7 +7,7 @@ Eye Dropper extension, the use is made possible through a released under a [MIT 
 ColorAdd, the use is made possible through a pro bono license. (Schools and universities are exempt from paying fees in a pro bono model, with this licensing in the education sector managed by the non-profit association ColorADD.Social.)
 
 ## Related technologies
-[🔗 ColorAdd](https://www.coloradd.net/en/coloradd-code/) - 🕵️‍♀️ Color identification system for color blind people.
+[🔗 ColorAdd](https://www.coloradd.net/en/coloradd-code/) - 🕵️‍♀️ Color identification system for color blind people. <br>
 [🔗 Chrome Eye Dropper](http://github.com/kepi/chromeEyeDropper) - 🚀 Eye Dropper is web browser extension which helps you pick and manage palettes of colors from web pages or color picker. It currently works in Chromium and Google Chrome™.
 
 ## 📋 Steps to compile the yarn project 
