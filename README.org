@@ -1,9 +1,10 @@
-# ColorCode - ColorAdd, browser extension.
+# ColorCode - ColorAdd, browser extension. #
+
 ## Description: 
 *ColorCode - ColorAdd* is an extension built on code from the Eye Dropper project, which is a web browser extension that helps you recognize and learn symbols
 of web page colors using the ColorAdd symbols. Currently works on Chromium and Google Chrome.*
 
-* Licenses *
+* Licenses 
 *Eye Dropper extension, the use is made possible through a released under a [MIT License] [[/blob/master/LICENSE]].*
 *ColorAdd, the use is made possible through a pro bono license. (Schools and universities are exempt from paying fees in a pro bono model, with this licensing in the education sector managed by the non-profit association ColorADD.Social.)*
 
