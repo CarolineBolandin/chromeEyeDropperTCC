@@ -8,3 +8,14 @@ Google Chrome™.
 
 * License
 The Eye Dropper extension is released under [[http://github.com/kepi/chromeEyeDropper/blob/master/LICENSE][MIT License]].*
+
+### steps to compile the yarn project
+
+```bash
+1) install nodejs (comes with npm)
+2) install yarn with the command "npm install -g yarn"
+3) clone the project "https://github.com/kepi/chromeEyeDropper"
+4) inside the cloned project directory, install the project dependencies with the "yarn" command
+5) run the "yarn run watch" command so that any changes to the project are automatically compiled
+5) the compiled code of the project will be in the "dist" folder. you can load this folder in chrome extensions to install the extension in the browser
+```
